@@ -1,0 +1,1 @@
+docker rm -f data_entry_cont && docker rm -f rabbitmq
