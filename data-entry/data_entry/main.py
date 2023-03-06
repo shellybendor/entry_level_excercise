@@ -12,16 +12,15 @@ class TwoInts(BaseModel):
 
 
 app = FastAPI()
+QUEUE_NAME = "nums_to_sum_queue"
 
 
 async def pub_to_queue(two_ints: TwoInts) -> None:
     connection = await aio_pika.connect_robust("amqp://guest:guest@rabbitmq/")
 
     async with connection:
-        routing_key = "nums_to_sum_queue"  # TODO: make global?
-
         channel = await connection.channel()
-        queue = await channel.declare_queue(routing_key)
+        queue = await channel.declare_queue(QUEUE_NAME)
 
         await channel.default_exchange.publish(
             aio_pika.Message(body=two_ints.json().encode()),
