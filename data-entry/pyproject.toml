@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "data-entry"
+version = "0.1.0"
+description = ""
+authors = ["Shelly Ben Dor <shelly.bendor@biocatch.com>"]
+packages = [{include = "data_entry"}]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+fastapi = "^0.92.0"
+pydantic = "^1.10.5"
+uvicorn = "^0.20.0"
+aio-pika = "^9.0.4"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
