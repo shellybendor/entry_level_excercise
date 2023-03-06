@@ -1,11 +1,15 @@
+import msgpack
+import aio_pika
 from fastapi import BackgroundTasks, FastAPI
 from pydantic import BaseModel
-import aio_pika
+from typing import Union
+from uuid import UUID, uuid4
 
 
 class TwoInts(BaseModel):
     first: int
     second: int
+    id: Union[UUID, None] = None
 
 
 app = FastAPI()
@@ -21,13 +25,15 @@ async def pub_to_queue(two_ints: TwoInts) -> None:
         queue = await channel.declare_queue(routing_key)
 
         await channel.default_exchange.publish(
-            aio_pika.Message(body=(str(two_ints.first)+" "+str(two_ints.second)).encode()),
+            aio_pika.Message(body=msgpack.packb(two_ints)),
             routing_key=queue.name,
         )
 
 
 @app.post("/sum")
 async def send_nums(two_ints: TwoInts, background_tasks: BackgroundTasks):
+    if not two_ints.id:
+        two_ints.id = uuid4()
     background_tasks.add_task(pub_to_queue, two_ints)
     return {"id": str(two_ints.first) + str(two_ints.second)}
     # return two_ints
