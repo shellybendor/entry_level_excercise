@@ -1,17 +1,15 @@
 [tool.poetry]
-name = "data-proccess"
+name = "kafka-reader"
 version = "0.1.0"
 description = ""
 authors = ["Shelly Ben Dor <shelly.bendor@biocatch.com>"]
-packages = [{include = "data_proccess"}]
+packages = [{include = "kafka_reader"}]
 
 [tool.poetry.dependencies]
 python = "^3.8"
-uvicorn = "^0.20.0"
-aio-pika = "^9.0.4"
-async-retrying = "^0.2.2"
-redis = "^4.5.1"
 aiokafka = "^0.8.0"
+asyncio = "^3.4.3"
+async-retrying = "^0.2.2"
 
 
 [build-system]

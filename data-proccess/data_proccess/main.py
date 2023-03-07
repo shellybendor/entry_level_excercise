@@ -1,11 +1,13 @@
 import asyncio
 import aio_pika
-from async_retrying import retry
 import redis
 import json
+from async_retrying import retry
+from aiokafka import AIOKafkaProducer
 
 
 QUEUE_NAME = "nums_to_sum_queue"
+TOPIC_NAME = "summed_nums"
 
 
 @retry(attempts=10)
@@ -36,6 +38,17 @@ async def main() -> None:
                     r.set(message_dict["id"], num_sum)
                     r.expire(message_dict["id"], 600)
                     print("Added to redis")
+
+                    producer = AIOKafkaProducer(bootstrap_servers='kafka-server:9092')
+                    await producer.start()
+                    try:
+                        # Produce message
+                        message_dict["sum"] = num_sum
+                        await producer.send_and_wait(TOPIC_NAME, json.dumps(message_dict).encode('utf-8'))
+                        print("Added to kafka")
+                    finally:
+                        # Wait for all pending messages to be delivered or expire.
+                        await producer.stop()
 
 
 if __name__ == "__main__":
