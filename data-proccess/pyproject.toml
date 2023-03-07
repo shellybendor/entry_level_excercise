@@ -10,6 +10,7 @@ python = "^3.8"
 uvicorn = "^0.20.0"
 aio-pika = "^9.0.4"
 async-retrying = "^0.2.2"
+redis = "^4.5.1"
 
 
 [build-system]
