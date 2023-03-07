@@ -7,6 +7,7 @@ import json
 
 QUEUE_NAME = "nums_to_sum_queue"
 
+
 @retry(attempts=10)
 async def main() -> None:
 
@@ -30,9 +31,10 @@ async def main() -> None:
                 async with message.process():
                     print("Received message")
                     message_dict = json.loads(message.body.decode())
-                    num_sum = int(message_dict["first"]) + int(message_dict["second"])
+                    num_sum: int = int(message_dict["first"]) + int(message_dict["second"])
                     r = redis.Redis(host='my_redis', port=6379, db=0)
                     r.set(message_dict["id"], num_sum)
+                    r.expire(message_dict["id"], 600)
                     print("Added to redis")
 
 
