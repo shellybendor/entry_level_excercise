@@ -1,8 +1,8 @@
+import asyncio
+
 from aiokafka import AIOKafkaConsumer
 from async_retrying import retry
 from azure.storage.blob.aio import BlobClient, ContainerClient
-import asyncio
-
 
 CONN_STRING = "DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;" \
               "AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuF" \

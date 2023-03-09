@@ -1,10 +1,10 @@
 import asyncio
+import json
+
 import aio_pika
 import redis
-import json
-from async_retrying import retry
 from aiokafka import AIOKafkaProducer
-
+from async_retrying import retry
 
 QUEUE_NAME = "nums_to_sum_queue"
 TOPIC_NAME = "summed_nums"

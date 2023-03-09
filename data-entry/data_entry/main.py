@@ -1,8 +1,9 @@
+from typing import Union
+from uuid import UUID, uuid4
+
 import aio_pika
 from fastapi import BackgroundTasks, FastAPI
 from pydantic import BaseModel
-from typing import Union
-from uuid import UUID, uuid4
 
 
 class TwoInts(BaseModel):
