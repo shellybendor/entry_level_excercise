@@ -12,7 +12,11 @@ aio-pika = "^9.0.4"
 async-retrying = "^0.2.2"
 redis = "^4.5.1"
 aiokafka = "^0.8.0"
+types-redis = "^4.5.1.4"
 
+
+[tool.poetry.group.dev.dependencies]
+mypy = "^1.1.1"
 
 [build-system]
 requires = ["poetry-core"]
