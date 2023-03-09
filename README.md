@@ -1,4 +1,4 @@
-# entry_level_excercise
+# entry level excercise
 
 Create a new service, composed of 3 microservices:
 
