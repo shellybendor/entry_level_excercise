@@ -33,21 +33,24 @@ async def main() -> None:
                 async with message.process():
                     print("Received message")
                     message_dict = json.loads(message.body.decode())
-                    num_sum: int = int(message_dict["first"]) + int(message_dict["second"])
+                    num_sum: int = int(message_dict["first"]) +\
+                        int(message_dict["second"])
                     r = redis.Redis(host='my_redis', port=6379, db=0)
                     r.set(message_dict["id"], num_sum)
                     r.expire(message_dict["id"], 600)
                     print("Added to redis")
 
-                    producer = AIOKafkaProducer(bootstrap_servers='kafka-server:9092')
+                    producer = AIOKafkaProducer(
+                        bootstrap_servers='kafka-server:9092')
                     await producer.start()
                     try:
                         # Produce message
                         message_dict["sum"] = num_sum
-                        await producer.send_and_wait(TOPIC_NAME, json.dumps(message_dict).encode('utf-8'))
+                        await producer.send_and_wait(
+                            TOPIC_NAME,
+                            json.dumps(message_dict).encode('utf-8'))
                         print("Added to kafka")
                     finally:
-                        # Wait for all pending messages to be delivered or expire.
                         await producer.stop()
 
 

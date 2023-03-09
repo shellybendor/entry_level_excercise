@@ -4,6 +4,7 @@ import redis
 
 app = FastAPI()
 
+
 @app.get("/home")
 async def trying():
     return {"hello world": "shelly"}

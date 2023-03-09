@@ -33,4 +33,3 @@ async def send_nums(two_ints: TwoInts, background_tasks: BackgroundTasks):
     two_ints.id = uuid4()
     background_tasks.add_task(pub_to_queue, two_ints)
     return {"id": two_ints.id}
-
