@@ -15,7 +15,8 @@ docker run -d --name kafka-server \
     -e KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper-server:2181 \
     bitnami/kafka:latest
 
-docker run -dp 10000:10000 --name azurite --network my_network mcr.microsoft.com/azure-storage/azurite
+docker run --name azurite --network my_network -dp 10000:10000 mcr.microsoft.com/azure-storage/azurite azurite-blob --blobHost 0.0.0.0
+
 docker build -t kafka_reader ./kafka-reader
 docker run -d --name kafka_reader_cont --network my_network kafka_reader
 docker build -t data_entry ./data-entry
