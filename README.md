@@ -13,3 +13,14 @@ Stage 2:
   4. Data Process should also write the result of the calculation to kafka
 
   5. New service that will read the results from kafka and write them in sets of 5 into a file in azure blob storage.
+
+
+## To run:
+- run ./run_docker script
+- use postman to send POST to localhost port 80:
+     {
+      "first": <some number>,
+      "second": <another numer>
+      }
+- use id to send GET request to localhost port 81: /sum/<id> and get sum back
+- docker desktop can be used to debug each container and see results
